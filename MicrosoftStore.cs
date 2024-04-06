@@ -86,10 +86,6 @@ class MicrosoftStore
 
     public Dictionary<string, Tuple<string, string, bool>> GetPackages(string appId)
     {
-        List<string> packageFullNames = [];
-        foreach (Package package in _packageManager.FindPackagesForUser(userSecurityId))
-            packageFullNames.Add(package.Id.FullName);
-
         XmlDocument updateInfo = new();
         _xmlDocument.LoadXml(WUIDRequest(appId).Replace("&gt;", ">").Replace("&lt;", "<"));
 
@@ -102,8 +98,6 @@ class MicrosoftStore
                 continue;
 
             string packageMoniker = updateInfo["Xml"]["ApplicabilityRules"]["Metadata"]["AppxPackageMetadata"]["AppxMetadata"].GetAttribute("PackageMoniker");
-            if (packageFullNames.Contains(packageMoniker))
-                continue;
             packages.Add(packageMoniker, new(
                 updateInfo["Xml"]["UpdateIdentity"].GetAttribute("UpdateID"),
                 updateInfo["Xml"]["UpdateIdentity"].GetAttribute("RevisionNumber"),
