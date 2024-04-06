@@ -18,8 +18,6 @@ class MicrosoftStore
 
     readonly PackageManager _packageManager = new();
 
-    readonly string userSecurityId = WindowsIdentity.GetCurrent().Owner.ToString();
-
     readonly JavaScriptSerializer _javaScriptSerializer = new();
 
     readonly Resources _resources = new();
